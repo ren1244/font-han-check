@@ -5,9 +5,17 @@ import Sfnt from './sfnt.js';
 
 const big5Set = new UnicodeSet(big5Iterator(0xa440, 0xc67e), 'big5');
 const gbkSet = new UnicodeSet(gbIterator(0xb0a1, 0xd7f9), 'gbk');
-const unicodes = UnicodeSet.unionArray([Object.keys(big5Set.u2c), Object.keys(gbkSet.u2c)]);
 
-function update(fontBuf) {
+function update(fontBuf, fontfilename) {
+    let unicodes = [];
+    if (document.querySelector('#big5').checked) {
+        unicodes.push(Object.keys(big5Set.u2c));
+    }
+    if (document.querySelector('#gb').checked) {
+        unicodes.push(Object.keys(gbkSet.u2c));
+    }
+    unicodes = UnicodeSet.unionArray(unicodes);
+
     let font = new Sfnt(fontBuf);
     let result = '序號\tunicode\t文字\tbig5\tgbk\n';
     result += '-------------------------------------\n';
@@ -21,13 +29,13 @@ function update(fontBuf) {
             result += `${++count}\t${code0}\t${str}\t${code1}\t${code2}\n`
         }
     });
-    document.querySelector('pre').textContent = result;
+    document.querySelector('pre').textContent = `${fontfilename} 缺少 ${count} 個常用字\n\n` + (count > 0 ? result : '');
 }
 
 document.querySelector('#file-input').addEventListener('change', evt => {
     let frd = new FileReader();
-    frd.onload = function() {
-        update(this.result);
+    frd.onload = function () {
+        update(this.result, evt.target.files[0].name);
     }
     frd.readAsArrayBuffer(evt.target.files[0]);
 });

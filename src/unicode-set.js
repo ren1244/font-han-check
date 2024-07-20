@@ -42,10 +42,6 @@ class UnicodeSet {
         });
         let arr = Object.keys(dict).map(x => parseInt(x, 10));
         arr.sort((a, b) => {
-            let d = dict[a] - dict[b];
-            if (d !== 0) {
-                return d;
-            }
             return a - b;
         });
         return arr;

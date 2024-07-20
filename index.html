@@ -6,9 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>字型常用字檢查</title>
 </head>
-<body style="font-size: 20px;">
-    <input type="file" id="file-input">
+<body>
+    <h2>檢查字型檔案內缺少的常用字</h2>
+    <p>正體中文以全字庫第一字面的 5041 字為標準</p>
+    <p>簡體中文以 GB2312 一級漢字的 3755 字為標準</p>
+    <p>使用步驟：</p>
+    <ol>
+        <li>選擇要檢查的標準：
+            <input type="checkbox" id="big5" checked> 正體中文
+            <input type="checkbox" id="gb" checked> 簡體中文</li>
+        <li>選擇要檢測的字型檔： <input type="file" id="file-input"></li>
+    </ol>
+    <hr>
     <pre></pre>
+    <!-- <script src="src/index.js" type="module"></script> -->
     <script src="dist/index.js"></script>
 </body>
 </html>
